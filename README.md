@@ -3,15 +3,31 @@ helpful toolbox for exporting slack content (searchable log of all conversation 
 
 # Usage
 
-````bash
+## Run in container
+```bash
 # Generate a `slack_export.zip` file for use with slack-export-viewer
 python slack_export.py --token xoxs-123... --zip slack_export
-````
+```
 
-````bash
+```bash
 python slack_history.py --token='123token'
-````
+```
 
+## Full example
+
+This example uses the automatically build image from Dockerhub (https://hub.docker.com/r/mschimmer/docker-slack-export-toolbox)
+
+```bash
+cd ~
+mkdir slack-export
+
+docker run -ti --rm -v ~/slack-export:/mnt/slack-export \
+  mschimmer/docker-slack-export-toolbox sh -c \ 
+  'cd /mnt/slack-export && python /app/slack_export.py --token <xoxp-...> --zip slack_export'
+
+cd ~/slack-export
+slack-export-viewer --port <port> --ip <ip> --no-browser --debug -z slack_export.zip
+```
 
 # Ressources
 
